@@ -28,8 +28,18 @@
       <div id="waste-chart" class="chart-section"></div>
 
       <div id="metadata-info" class="metadata-section"></div>
+      <div id="total-days">0</div>
+      <div id="total-organic">0 kg</div>
+      <div id="total-recyclable">0 kg</div>
+      <div id="total-hazardous">0 kg</div>
+      <div id="grand-total">0 kg</div>
+      <div id="daily-average">0 kg</div>
+
+      <!-- Add these for connection status and errors -->
+      <div id="data-status">🟡 Connecting...</div>
+      <div id="error-message" style="display: none"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="backend-integration.js"></script>
   </body>
 </html>
