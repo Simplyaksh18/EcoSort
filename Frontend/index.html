@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Waste Management Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🗑️ Smart Waste Management Dashboard</h1>
+        <div id="connection-status"></div>
+      </header>
+
+      <div class="controls">
+        <button onclick="refreshData()">🔄 Refresh Data</button>
+        <button onclick="downloadData()">💾 Download JSON</button>
+        <button onclick="exportToCSV()">📊 Export CSV</button>
+      </div>
+
+      <div id="summary-stats" class="summary-section"></div>
+
+      <div id="dashboard-content" class="dashboard-section"></div>
+
+      <div id="daily-data" class="daily-section"></div>
+
+      <div id="waste-chart" class="chart-section"></div>
+
+      <div id="metadata-info" class="metadata-section"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
