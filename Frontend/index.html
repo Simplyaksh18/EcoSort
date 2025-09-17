@@ -2,44 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Waste Management Dashboard</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Smart Waste Management System</title>
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1>🗑️ Smart Waste Management Dashboard</h1>
-        <div id="connection-status"></div>
-      </header>
-
-      <div class="controls">
-        <button onclick="refreshData()">🔄 Refresh Data</button>
-        <button onclick="downloadData()">💾 Download JSON</button>
-        <button onclick="exportToCSV()">📊 Export CSV</button>
-      </div>
-
-      <div id="summary-stats" class="summary-section"></div>
-
-      <div id="dashboard-content" class="dashboard-section"></div>
-
-      <div id="daily-data" class="daily-section"></div>
-
-      <div id="waste-chart" class="chart-section"></div>
-
-      <div id="metadata-info" class="metadata-section"></div>
-      <div id="total-days">0</div>
-      <div id="total-organic">0 kg</div>
-      <div id="total-recyclable">0 kg</div>
-      <div id="total-hazardous">0 kg</div>
-      <div id="grand-total">0 kg</div>
-      <div id="daily-average">0 kg</div>
-
-      <!-- Add these for connection status and errors -->
-      <div id="data-status">🟡 Connecting...</div>
-      <div id="error-message" style="display: none"></div>
-    </div>
-
-    <script src="backend-integration.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
