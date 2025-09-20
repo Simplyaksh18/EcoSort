@@ -77,6 +77,7 @@ async function fetchDashboardData() {
       headers: {
         "Content-Type": "application/json",
       },
+      mode: "cors", // Add this line to enable CORS requests
     });
 
     if (!response.ok) {
@@ -521,6 +522,7 @@ window.refreshData = refreshData;
 window.downloadData = downloadData;
 window.exportToCSV = exportToCSV;
 window.checkBackendHealth = checkBackendHealth;
+window.fetchDashboardData = fetchDashboardData; // Expose for the retry button
 
 // Global error handler
 window.addEventListener("error", function (event) {

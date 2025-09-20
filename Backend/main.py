@@ -129,7 +129,7 @@ class SimpleJWT:
             ).digest()
             expected_signature_encoded = base64.urlsafe_b64encode(expected_signature).decode().rstrip('=')
             
-            if signature_encoded != expected_signature_encoded:
+            if not hmac.compare_digest(signature_encoded, expected_signature_encoded):
                 raise ValueError("Invalid signature")
             
             # Decode payload
@@ -190,7 +190,7 @@ class SecurityBearer(HTTPBearer):
         super(SecurityBearer, self).__init__(auto_error=auto_error)
 
     async def __call__(self, request: Request):
-        credentials: HTTPAuthorizationCredentials = await super(SecurityBearer, self).__call__(request)
+        credentials: Optional[HTTPAuthorizationCredentials] = await super(SecurityBearer, self).__call__(request)
         
         if credentials:
             if not credentials.scheme == "Bearer":
@@ -460,34 +460,35 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# ==================== MIDDLEWARE FUNCTIONS ====================
 
-@app.middleware("http")
-async def rate_limit_middleware(request: Request, call_next):
-    """Rate limiting middleware to prevent API abuse."""
-    client_ip = request.client.host
-    
+async def logging_and_rate_limit_middleware(request: Request, call_next):
+    """Log all requests for monitoring and debugging."""
+    start_time = time.time()
+    client_ip = request.client.host if request.client else "unknown"
+
+    # Rate limiting check
     if not rate_limiter.is_allowed(client_ip):
         logger.warning(f"Rate limit exceeded for IP: {client_ip}")
-        return JSONResponse(
+        response = JSONResponse(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             content={"detail": "Rate limit exceeded. Please try again later."}
         )
-    
-    response = await call_next(request)
-    return response
+        process_time = time.time() - start_time
+        logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.3f}s (Rate Limited)")
+        return response
 
-@app.middleware("http")
-async def logging_middleware(request: Request, call_next):
-    """Log all requests for monitoring and debugging."""
-    start_time = time.time()
-    
+    # Process request
     response = await call_next(request)
-    
+
+    # Log after request is processed
     process_time = time.time() - start_time
     logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.3f}s")
-    
+
     return response
+
+# Add the combined middleware
+app.middleware("http")(logging_and_rate_limit_middleware)
+
 
 # ==================== API ENDPOINTS ====================
 
@@ -531,7 +532,7 @@ async def receive_iot_data(
     """Receive and process IoT device data from waste bins."""
     try:
         # Log incoming request
-        client_ip = request.client.host
+        client_ip = request.client.host if request.client else "unknown"
         logger.info(f"Received IoT data from {client_ip} for bin {bin_data.bin_id}")
         
         # Store data in database
@@ -547,6 +548,13 @@ async def receive_iot_data(
         # Get current status
         current_status = database.get_bin_status(bin_data.bin_id)
         
+        if not current_status:
+            logger.error(f"Bin status not found after storing data for bin {bin_data.bin_id}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Failed to retrieve bin status after storing data for bin {bin_data.bin_id}"
+            )
+
         response_data = {
             "bin_id": bin_data.bin_id,
             "status": current_status["status"],
