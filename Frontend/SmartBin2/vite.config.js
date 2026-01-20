@@ -3,10 +3,13 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: "/EcoSort/", // 👈 REQUIRED for GitHub Pages
+
   build: {
     outDir: "dist",
     emptyOutDir: true,
   },
+
   plugins: [
     react(),
     VitePWA({
@@ -15,12 +18,13 @@ export default defineConfig({
       manifest: {
         name: "EcoSort Admin",
         short_name: "EcoSort",
-        start_url: "/",
+        start_url: "/EcoSort/", // 👈 MUST match base
         display: "standalone",
         theme_color: "#22c55e",
       },
     }),
   ],
+
   server: {
     port: 5174,
     proxy: {
