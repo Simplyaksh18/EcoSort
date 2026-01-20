@@ -3,35 +3,24 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  base: "/EcoSort/", // 👈 REQUIRED for GitHub Pages
-
-  build: {
-    outDir: "dist",
-    emptyOutDir: true,
-  },
+  base: "/EcoSort/", // MUST match repo name exactly
 
   plugins: [
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico"],
+      strategies: "generateSW",
+      injectRegister: "auto",
+
       manifest: {
         name: "EcoSort Admin",
         short_name: "EcoSort",
-        start_url: "/EcoSort/", // 👈 MUST match base
+        start_url: "/EcoSort/",
+        scope: "/EcoSort/",
         display: "standalone",
         theme_color: "#22c55e",
+        background_color: "#ffffff",
       },
     }),
   ],
-
-  server: {
-    port: 5174,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-      },
-    },
-  },
 });
