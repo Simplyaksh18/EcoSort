@@ -492,6 +492,246 @@ app.middleware("http")(logging_and_rate_limit_middleware)
 
 # ==================== API ENDPOINTS ====================
 
+@app.get("/api/bins", tags=["Bin Status"])
+async def get_bins():
+    """Get all bins data."""
+    return [
+        {
+            "id": "BIN-BBSR-001",
+            "location": "Master Canteen Square",
+            "lat": 20.27,
+            "lon": 85.84,
+            "fill": 78,
+            "type": "Recyclable",
+            "updated": "09:05",
+        },
+        {
+            "id": "BIN-BBSR-002",
+            "location": "Saheed Nagar Market",
+            "lat": 20.2962,
+            "lon": 85.849,
+            "fill": 83,
+            "type": "Organic",
+            "updated": "09:12",
+        },
+        {
+            "id": "BIN-BBSR-003",
+            "location": "Rasulgarh Square",
+            "lat": 20.3005,
+            "lon": 85.8535,
+            "fill": 65,
+            "type": "Recyclable",
+            "updated": "09:07",
+        },
+        {
+            "id": "BIN-BBSR-004",
+            "location": "Jaydev Vihar",
+            "lat": 20.3058,
+            "lon": 85.82,
+            "fill": 72,
+            "type": "Recyclable",
+            "updated": "09:02",
+        },
+        {
+            "id": "BIN-BBSR-005",
+            "location": "Kharvel Nagar",
+            "lat": 20.2735,
+            "lon": 85.842,
+            "fill": 58,
+            "type": "Organic",
+            "updated": "08:59",
+        },
+        {
+            "id": "BIN-BBSR-006",
+            "location": "Chandrasekharpur - Infocity",
+            "lat": 20.317,
+            "lon": 85.8235,
+            "fill": 91,
+            "type": "Hazardous",
+            "updated": "09:10",
+        },
+        {
+            "id": "BIN-BBSR-007",
+            "location": "Patia Big Bazaar",
+            "lat": 20.3187,
+            "lon": 85.8269,
+            "fill": 68,
+            "type": "Recyclable",
+            "updated": "09:11",
+        },
+        {
+            "id": "BIN-BBSR-008",
+            "location": "Khandagiri Square",
+            "lat": 20.2625,
+            "lon": 85.7805,
+            "fill": 86,
+            "type": "Organic",
+            "updated": "09:14",
+        },
+        {
+            "id": "BIN-BBSR-009",
+            "location": "Ekamra Kanan Gate",
+            "lat": 20.2968,
+            "lon": 85.8197,
+            "fill": 41,
+            "type": "Organic",
+            "updated": "08:49",
+        },
+        {
+            "id": "BIN-BBSR-010",
+            "location": "Unit 1 Market",
+            "lat": 20.2665,
+            "lon": 85.8393,
+            "fill": 74,
+            "type": "Recyclable",
+            "updated": "09:03",
+        },
+        {
+            "id": "BIN-BBSR-011",
+            "location": "Old Town — Lingaraj",
+            "lat": 20.2414,
+            "lon": 85.8399,
+            "fill": 67,
+            "type": "Organic",
+            "updated": "09:08",
+        },
+        {
+            "id": "BIN-BBSR-012",
+            "location": "Railway Station (Platform Road)",
+            "lat": 20.269,
+            "lon": 85.8445,
+            "fill": 92,
+            "type": "Hazardous",
+            "updated": "09:15",
+        },
+    ]
+
+@app.get("/api/drivers", tags=["Bin Status"])
+async def get_drivers():
+    """Get all drivers data."""
+    return [
+        {
+            "id": "DRV-BBSR-01",
+            "name": "Prakash Mohanty",
+            "phone": "+91 94370 10001",
+            "lat": 20.28,
+            "lon": 85.84,
+            "status": "Available",
+        },
+        {
+            "id": "DRV-BBSR-02",
+            "name": "Ananya Sahu",
+            "phone": "+91 98530 10002",
+            "lat": 20.3,
+            "lon": 85.83,
+            "status": "Available",
+        },
+        {
+            "id": "DRV-BBSR-03",
+            "name": "Bikash Swain",
+            "phone": "+91 99370 10003",
+            "lat": 20.32,
+            "lon": 85.82,
+            "status": "On Trip",
+        },
+        {
+            "id": "DRV-BBSR-04",
+            "name": "Sabita Das",
+            "phone": "+91 98610 10004",
+            "lat": 20.26,
+            "lon": 85.79,
+            "status": "Available",
+        },
+        {
+            "id": "DRV-BBSR-05",
+            "name": "Amit Patra",
+            "phone": "+91 93480 10005",
+            "lat": 20.31,
+            "lon": 85.84,
+            "status": "Available",
+        },
+    ]
+
+@app.get("/api/stations", tags=["Bin Status"])
+async def get_stations():
+    """Get all stations data."""
+    return {
+        "Recyclable": [
+            {
+                "id": "REC-BBSR-1",
+                "name": "BMC MRF — Chandrasekharpur",
+                "lat": 20.3178,
+                "lon": 85.825,
+                "capacityKg": 12000,
+            },
+            {
+                "id": "REC-BBSR-2",
+                "name": "Khurda MRF — Industrial Area",
+                "lat": 20.154,
+                "lon": 85.666,
+                "capacityKg": 20000,
+            },
+        ],
+        "Organic": [
+            {
+                "id": "ORG-BBSR-1",
+                "name": "BMC Compost Yard — Palasuni",
+                "lat": 20.2995,
+                "lon": 85.8695,
+                "capacityKg": 10000,
+            },
+            {
+                "id": "ORG-BBSR-2",
+                "name": "Community Compost — Unit 6",
+                "lat": 20.2652,
+                "lon": 85.8258,
+                "capacityKg": 6000,
+            },
+        ],
+        "Hazardous": [
+            {
+                "id": "HAZ-BBSR-1",
+                "name": "Authorized Hazardous Facility — Khurda",
+                "lat": 20.121,
+                "lon": 85.674,
+                "capacityKg": 15000,
+            },
+        ],
+    }
+
+@app.get("/api/trips", tags=["Bin Status"])
+async def get_trips():
+    """Get all trips data."""
+    return []
+
+@app.post("/api/dispatch", tags=["Bin Status"])
+async def dispatch_trip(request: Request):
+    """Dispatch a trip."""
+    data = await request.json()
+    binId = data.get("binId")
+    driverId = data.get("driverId")
+    stationId = data.get("stationId")
+    return {
+        "id": "TRP-001",
+        "binId": binId,
+        "location": "Test Location",
+        "driverId": driverId,
+        "driver": {"id": driverId, "name": "Test Driver"},
+        "stationId": stationId,
+        "station": {"id": stationId, "name": "Test Station"},
+        "status": "Assigned",
+        "createdAt": 1638360000000,
+    }
+
+@app.patch("/api/trips/{trip_id}", tags=["Bin Status"])
+async def update_trip(trip_id: str, request: Request):
+    """Update a trip."""
+    data = await request.json()
+    return {
+        "id": trip_id,
+        "status": data.get("status", "Assigned"),
+    }
+
 @app.get("/", tags=["System"])
 async def root():
     """Root endpoint providing API information."""
