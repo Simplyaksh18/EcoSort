@@ -31,7 +31,7 @@ async function fetchWasteData() {
 
     if (!response.ok) {
       throw new Error(
-        `Backend Error: ${response.status} ${response.statusText}`
+        `Backend Error: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -88,22 +88,22 @@ function updateSummaryStats(summary) {
   // Example - modify these selectors to match your existing HTML
   const elements = {
     totalDays: document.querySelector(
-      '#total-days, .total-days, [data-stat="days"]'
+      '#total-days, .total-days, [data-stat="days"]',
     ),
     totalOrganic: document.querySelector(
-      '#total-organic, .total-organic, [data-stat="organic"]'
+      '#total-organic, .total-organic, [data-stat="organic"]',
     ),
     totalRecyclable: document.querySelector(
-      '#total-recyclable, .total-recyclable, [data-stat="recyclable"]'
+      '#total-recyclable, .total-recyclable, [data-stat="recyclable"]',
     ),
     totalHazardous: document.querySelector(
-      '#total-hazardous, .total-hazardous, [data-stat="hazardous"]'
+      '#total-hazardous, .total-hazardous, [data-stat="hazardous"]',
     ),
     grandTotal: document.querySelector(
-      '#grand-total, .grand-total, [data-stat="total"]'
+      '#grand-total, .grand-total, [data-stat="total"]',
     ),
     dailyAverage: document.querySelector(
-      '#daily-average, .daily-average, [data-stat="average"]'
+      '#daily-average, .daily-average, [data-stat="average"]',
     ),
   };
 
@@ -191,12 +191,12 @@ function updateD3Chart(dailyData) {
 function updateCustomChart(dailyData) {
   // Find your existing chart container
   const chartContainer = document.querySelector(
-    "#chart-container, .chart-container, .waste-chart"
+    "#chart-container, .chart-container, .waste-chart",
   );
 
   if (!chartContainer) {
     console.log(
-      "📊 No chart container found, data available in wasteData variable"
+      "📊 No chart container found, data available in wasteData variable",
     );
     return;
   }
@@ -244,7 +244,7 @@ function showBackendError(message) {
 
   // Find error display element (modify selector to match your HTML)
   const errorElement = document.querySelector(
-    "#error-message, .error-message, .alert"
+    "#error-message, .error-message, .alert",
   );
 
   if (errorElement) {
@@ -270,7 +270,7 @@ function showBackendError(message) {
  */
 function updateDataStatus(status, metadata) {
   const statusElement = document.querySelector(
-    "#data-status, .data-status, .connection-status"
+    "#data-status, .data-status, .connection-status",
   );
 
   if (!statusElement) return;
@@ -287,7 +287,7 @@ function updateDataStatus(status, metadata) {
 
   if (metadata) {
     statusElement.title = `Last updated: ${new Date(
-      metadata.generated_at
+      metadata.generated_at,
     ).toLocaleString()}`;
   }
 }
@@ -369,7 +369,7 @@ function initializeBackendIntegration() {
 }
 
 // Export functions for global access
-window.fetchWasteData = fetchWasteData;
+
 window.retryBackendConnection = retryBackendConnection;
 window.wasteData = null;
 
