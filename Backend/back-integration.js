@@ -369,7 +369,7 @@ function initializeBackendIntegration() {
 }
 
 // Export functions for global access
-
+window.fetchWasteData = fetchWasteData;
 window.retryBackendConnection = retryBackendConnection;
 window.wasteData = null;
 

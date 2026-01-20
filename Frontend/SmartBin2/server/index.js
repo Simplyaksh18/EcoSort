@@ -7,6 +7,12 @@ import { createServer as createViteServer } from "vite";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(
+  cors({
+    origin: "https://simplyaksh18.github.io",
+  }),
+);
+
 async function createServer() {
   const app = express();
   app.use(cors());
