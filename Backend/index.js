@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer as createViteServer } from "vite";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -263,29 +262,9 @@ async function createServer() {
     res.json(trip);
   });
 
-  const isProduction = process.env.NODE_ENV === "production";
-
-  if (isProduction) {
-    // In production, serve the static files from the 'dist' directory
-    app.use(express.static(path.resolve(__dirname, "../dist")));
-    // SPA fallback
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve(__dirname, "../dist/index.html"));
-    });
-  } else {
-    // In development, use Vite's middleware
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-      // Point to the root of the frontend code
-      root: path.resolve(__dirname, ".."),
-    });
-    app.use(vite.middlewares);
-  }
-
   const PORT = process.env.PORT || 8080;
   app.listen(PORT, () => {
-    console.log(`Bhubaneswar server on http://localhost:${PORT}`);
+    console.log(`Backend running on port http://localhost:${PORT}`);
   });
 }
 
