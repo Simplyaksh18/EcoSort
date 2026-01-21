@@ -1,4 +1,6 @@
-const base = "/api";
+// Single production API base URL for all frontend calls
+export const API_BASE_URL = "https://ecosort-h6tp.onrender.com";
+const base = `${API_BASE_URL}/api`;
 
 export async function getBins() {
   try {
