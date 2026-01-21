@@ -6,14 +6,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(
-  cors({
-    origin: "https://simplyaksh18.github.io",
-  }),
-);
-
 async function createServer() {
   const app = express();
+  app.use(
+    cors({
+      origin: "https://simplyaksh18.github.io",
+    }),
+  );
   app.use(cors());
   app.use(express.json());
 
