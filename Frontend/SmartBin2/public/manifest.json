@@ -1,7 +1,7 @@
 {
   "name": "EcoSort Admin",
   "short_name": "EcoSort",
-  "start_url": "/",
+  "start_url": "https://simplyaksh18.github.io/EcoSort/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#22c55e",
