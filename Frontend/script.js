@@ -10,7 +10,8 @@
  */
 
 // Configuration
-const API_BASE_URL = "http://127.0.0.1:8000";
+// Production API base (deployed backend)
+const API_BASE_URL = "https://ecosort-h6tp.onrender.com";
 const DASHBOARD_ENDPOINT = "/dashboard/data";
 
 // Global variables to store data
@@ -127,7 +128,7 @@ function displayDashboardData(responseData) {
   if (!responseData || !responseData.data) {
     showError(
       "dashboard-content",
-      "Invalid data format received from backend."
+      "Invalid data format received from backend.",
     );
     return;
   }
@@ -159,32 +160,32 @@ function displaySummaryStats(summary) {
             </div>
             <div class="stat-card">
                 <div class="stat-number">${formatNumber(
-                  summary.totals?.total_organic_kg || 0
+                  summary.totals?.total_organic_kg || 0,
                 )} kg</div>
                 <div class="stat-label">Total Organic Waste</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">${formatNumber(
-                  summary.totals?.total_recyclable_kg || 0
+                  summary.totals?.total_recyclable_kg || 0,
                 )} kg</div>
                 <div class="stat-label">Total Recyclable Waste</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">${formatNumber(
-                  summary.totals?.total_hazardous_kg || 0
+                  summary.totals?.total_hazardous_kg || 0,
                 )} kg</div>
                 <div class="stat-label">Total Hazardous Waste</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">${formatNumber(
-                  summary.totals?.grand_total_kg || 0
+                  summary.totals?.grand_total_kg || 0,
                 )} kg</div>
                 <div class="stat-label">Grand Total</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">${formatNumber(
                   summary.totals?.grand_total_kg / summary.total_data_points ||
-                    0
+                    0,
                 )} kg</div>
                 <div class="stat-label">Daily Average</div>
             </div>
@@ -237,17 +238,17 @@ function displayDailyData(dailyData) {
 
     tableHTML += `
             <tr class="${isToday ? "today-row" : ""} ${
-      isCollectionDay ? "collection-row" : ""
-    }">
+              isCollectionDay ? "collection-row" : ""
+            }">
                 <td class="date-cell">${formatDate(day.date)}</td>
                 <td class="number-cell">${formatNumber(
-                  day.total_organic_kg
+                  day.total_organic_kg,
                 )}</td>
                 <td class="number-cell">${formatNumber(
-                  day.total_recyclable_kg
+                  day.total_recyclable_kg,
                 )}</td>
                 <td class="number-cell">${formatNumber(
-                  day.total_hazardous_kg
+                  day.total_hazardous_kg,
                 )}</td>
                 <td class="number-cell total-cell">${formatNumber(total)}</td>
                 <td class="status-cell ${statusClass}">${status}</td>
@@ -316,8 +317,8 @@ function createWasteChart(dailyData) {
   const maxTotal = Math.max(
     ...dailyData.map(
       (day) =>
-        day.total_organic_kg + day.total_recyclable_kg + day.total_hazardous_kg
-    )
+        day.total_organic_kg + day.total_recyclable_kg + day.total_hazardous_kg,
+    ),
   );
 
   dailyData.forEach((day, index) => {
@@ -498,7 +499,7 @@ async function initializeApp() {
             1. FastAPI backend is running: <code>python main.py</code><br>
             2. Backend is accessible at ${API_BASE_URL}<br>
             3. CORS is enabled for this domain
-        `
+        `,
     );
   }
 }

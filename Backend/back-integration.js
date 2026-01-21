@@ -6,7 +6,8 @@
  */
 
 // Backend Configuration
-const BACKEND_URL = "http://127.0.0.1:8000";
+// Production backend URL (deployed)
+const BACKEND_URL = "https://ecosort-h6tp.onrender.com";
 const DASHBOARD_ENDPOINT = "/dashboard/data";
 
 // Global variables
