@@ -16,21 +16,29 @@ async function createServer() {
 
   app.use(
     cors({
-      origin: function (origin, callback) {
-        // allow server-to-server / curl / mobile apps
+      origin: (origin, callback) => {
+        // Allow server-to-server, Postman, mobile apps
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
+        // Allow GitHub Pages
+        if (origin === "https://simplyaksh18.github.io") {
+          return callback(null, true);
         }
+
+        // Allow ANY Cloudflare Pages deploy
+        if (origin.endsWith(".pages.dev")) {
+          return callback(null, true);
+        }
+
+        // Block everything else
+        return callback(new Error("CORS blocked: " + origin));
       },
       methods: ["GET", "POST", "PATCH", "OPTIONS"],
       allowedHeaders: ["Content-Type"],
     }),
   );
 
+  // VERY IMPORTANT
   app.use(express.json());
 
   let bins = [
