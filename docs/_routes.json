@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "include": ["/EcoSort/*"],
+  "exclude": [
+    "/EcoSort/icons/*",
+    "/EcoSort/screenshots/*",
+    "/EcoSort/*.png",
+    "/EcoSort/*.webp",
+    "/EcoSort/*.svg"
+  ]
+}
