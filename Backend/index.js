@@ -17,7 +17,7 @@ async function createServer() {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow server-to-server, Postman, mobile apps
+        // Allow non-browser requests (Postman, curl, Android)
         if (!origin) return callback(null, true);
 
         // Allow GitHub Pages
@@ -25,21 +25,22 @@ async function createServer() {
           return callback(null, true);
         }
 
-        // Allow ANY Cloudflare Pages deploy
+        // Allow ALL Cloudflare Pages deployments
         if (origin.endsWith(".pages.dev")) {
           return callback(null, true);
         }
 
-        // Block everything else
-        return callback(new Error("CORS blocked: " + origin));
+        // Reject silently (do NOT throw)
+        return callback(null, false);
       },
+      credentials: true,
       methods: ["GET", "POST", "PATCH", "OPTIONS"],
-      allowedHeaders: ["Content-Type"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     }),
   );
 
-  // VERY IMPORTANT
-  app.use(express.json());
+  // VERY IMPORTANT – handle preflight
+  app.options("*", cors());
 
   let bins = [
     {
