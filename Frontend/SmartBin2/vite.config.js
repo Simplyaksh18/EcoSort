@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  base: "/EcoSort/", // MUST match repo name exactly
+  base: "/", // MUST match repo name exactly
 
   plugins: [
     react(),
