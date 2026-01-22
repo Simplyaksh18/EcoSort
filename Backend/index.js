@@ -8,12 +8,29 @@ const __dirname = path.dirname(__filename);
 
 async function createServer() {
   const app = express();
+  const allowedOrigins = [
+    "https://simplyaksh18.github.io",
+    "https://139060fd.ecosort.pages.dev",
+    "https://ecosort.pages.dev",
+  ];
+
   app.use(
     cors({
-      origin: "https://simplyaksh18.github.io",
+      origin: function (origin, callback) {
+        // allow server-to-server / curl / mobile apps
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      methods: ["GET", "POST", "PATCH", "OPTIONS"],
+      allowedHeaders: ["Content-Type"],
     }),
   );
-  app.use(cors());
+
   app.use(express.json());
 
   let bins = [
