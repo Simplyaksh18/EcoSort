@@ -1,0 +1,5 @@
+/EcoSort/manifest.webmanifest  /EcoSort/manifest.webmanifest  200
+/EcoSort/icons/*               /EcoSort/icons/:splat         200
+/EcoSort/screenshots/*         /EcoSort/screenshots/:splat   200
+
+/*  /EcoSort/index.html  200
