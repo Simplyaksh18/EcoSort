@@ -704,24 +704,32 @@ async def get_trips():
     """Get all trips data."""
     return []
 
-@app.post("/api/dispatch", tags=["Bin Status"])
+@app.post("/api/dispatch")
 async def dispatch_trip(request: Request):
-    """Dispatch a trip."""
     data = await request.json()
+
     binId = data.get("binId")
     driverId = data.get("driverId")
     stationId = data.get("stationId")
+
+    if not binId or not driverId or not stationId:
+        raise HTTPException(
+            status_code=400,
+            detail="binId, driverId and stationId are required"
+        )
+
     return {
-        "id": "TRP-001",
+        "id": f"TRP-{int(time.time())}",
         "binId": binId,
-        "location": "Test Location",
+        "location": "Auto Assigned",
         "driverId": driverId,
-        "driver": {"id": driverId, "name": "Test Driver"},
+        "driver": {"id": driverId, "name": "Assigned Driver"},
         "stationId": stationId,
-        "station": {"id": stationId, "name": "Test Station"},
+        "station": {"id": stationId, "name": "Assigned Station"},
         "status": "Assigned",
-        "createdAt": 1638360000000,
+        "createdAt": int(time.time() * 1000),
     }
+
 
 @app.patch("/api/trips/{trip_id}", tags=["Bin Status"])
 async def update_trip(trip_id: str, request: Request):
