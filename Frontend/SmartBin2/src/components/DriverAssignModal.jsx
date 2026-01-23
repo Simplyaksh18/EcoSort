@@ -145,7 +145,7 @@ export default function DriverAssignModal({
             disabled={!selectedDriver || !selectedStation}
             onClick={() => {
               if (!selectedDriver || !selectedStation || !bin?.id) return;
-              onAssign(bin.id, selectedDriver, selectedStation);
+              onAssign(selectedDriver, selectedStation);
             }}
           >
             Assign
