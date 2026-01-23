@@ -705,25 +705,30 @@ async def get_trips():
     return []
 
 @app.post("/api/dispatch")
-async def dispatch(payload: dict):
-    try:
-        bin_id = payload.get("binId") or payload.get("bin_id")
-        driver_id = payload.get("driverId") or payload.get("driver_id")
-        station_id = payload.get("stationId") or payload.get("station_id")
+async def dispatch_trip(request: Request):
+    data = await request.json()
 
-        if not bin_id or not driver_id or not station_id:
-            raise HTTPException(status_code=400, detail="Missing fields")
+    binId = data.get("binId")
+    driverId = data.get("driverId")
+    stationId = data.get("stationId")
 
-        # 🔥 DEMO MODE: just log + return success
-        return {
-            "status": "ok",
-            "binId": bin_id,
-            "driverId": driver_id,
-            "stationId": station_id,
-        }
+    if not binId or not driverId or not stationId:
+        raise HTTPException(
+            status_code=400,
+            detail="binId, driverId and stationId are required"
+        )
 
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    return {
+        "id": f"TRP-{int(time.time())}",
+        "binId": binId,
+        "location": "Auto Assigned",
+        "driverId": driverId,
+        "driver": {"id": driverId, "name": "Assigned Driver"},
+        "stationId": stationId,
+        "station": {"id": stationId, "name": "Assigned Station"},
+        "status": "Assigned",
+        "createdAt": int(time.time() * 1000),
+    }
 
 
 @app.patch("/api/trips/{trip_id}", tags=["Bin Status"])

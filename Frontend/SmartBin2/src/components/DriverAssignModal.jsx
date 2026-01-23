@@ -36,6 +36,19 @@ export default function DriverAssignModal({
     sortedStations[0]?.id || null,
   );
 
+  useEffect(() => {
+    if (!bin) return;
+
+    if (!driverId && drivers.length) {
+      setDriverId(drivers[0].id); // same as earlier behavior
+    }
+
+    if (!stationId && stations.length) {
+      const match = stations.find((s) => s.type === bin.type);
+      setStationId((match || stations[0]).id);
+    }
+  }, [bin, drivers, stations]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
@@ -132,7 +145,7 @@ export default function DriverAssignModal({
             disabled={!selectedDriver || !selectedStation}
             onClick={() => {
               if (!selectedDriver || !selectedStation || !bin?.id) return;
-              onAssign(selectedDriver, selectedStation);
+              onAssign(bin.id, selectedDriver, selectedStation);
             }}
           >
             Assign
