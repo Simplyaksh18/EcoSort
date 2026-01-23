@@ -42,6 +42,9 @@ async function createServer() {
   // VERY IMPORTANT – handle preflight
   app.options("*", cors());
 
+  // Parse JSON request bodies so `req.body` is populated
+  app.use(express.json());
+
   let bins = [
     {
       id: "BIN-BBSR-001",
@@ -245,6 +248,8 @@ async function createServer() {
   app.get("/api/trips", (req, res) => res.json(trips));
 
   app.post("/api/dispatch", (req, res) => {
+    // log incoming payload for debugging
+    console.log("/api/dispatch payload:", req.body);
     const { binId, driverId, stationId } = req.body || {};
     const bin = bins.find((b) => b.id === binId);
     const driver = drivers.find((d) => d.id === driverId);
