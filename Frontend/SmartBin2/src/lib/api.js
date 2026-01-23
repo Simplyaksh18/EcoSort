@@ -1,5 +1,10 @@
-// Single production API base URL for all frontend calls
-export const API_BASE_URL = "https://ecosort-h6tp.onrender.com";
+// Prefer local backend during development, otherwise use production URL
+const defaultProd = "https://ecosort-h6tp.onrender.com";
+const isLocal =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1");
+export const API_BASE_URL = isLocal ? "http://localhost:8080" : defaultProd;
 const base = `${API_BASE_URL}/api`;
 
 export async function getBins() {
