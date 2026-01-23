@@ -1,1 +1,37 @@
-node_modules
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Vite / Frontend builds
+Frontend/**/dist/
+Frontend/**/build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv
+geo_env/
+
+# Android / Gradle
+.gradle/
+build/
+app/build/
+local.properties
+
+# Bubblewrap / Android SDK
+.android/
+.bubblewrap/
+android_sdk/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+hs_err_pid*.log
+
+local.properties

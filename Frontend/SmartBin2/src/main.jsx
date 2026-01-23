@@ -11,7 +11,7 @@ window.addEventListener("unhandledrejection", (e) => {
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/EcoSort">
       <Routes>
         <Route path="/*" element={<App />} />
       </Routes>
