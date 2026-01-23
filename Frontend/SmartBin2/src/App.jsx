@@ -170,12 +170,7 @@ function DashboardShell({ onSignOut }) {
   }, []);
 
   const handleAssign = async (driverId, stationId) => {
-    try {
-      await dispatchTruck({ binId: assignTarget.id, driverId, stationId });
-    } catch (err) {
-      pushToast("Dispatch failed", err?.message || "Server error");
-      return; // keep modal open for retry
-    }
+    await dispatchTruck({ binId: assignTarget.id, driverId, stationId });
     const loc = assignTarget.location;
     setAssignTarget(null);
     const [b, d, t] = await Promise.all([getBins(), getDrivers(), getTrips()]);
