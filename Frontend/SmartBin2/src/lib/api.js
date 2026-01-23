@@ -46,8 +46,18 @@ export async function dispatchTruck({ binId, driverId, stationId }) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ binId, driverId, stationId }),
   });
-  if (!r.ok) throw new Error("Dispatch failed");
-  return r.json();
+  const text = await r.text();
+  let parsed = null;
+  try {
+    parsed = JSON.parse(text);
+  } catch (e) {
+    // not JSON
+  }
+  if (!r.ok) {
+    const msg = parsed?.detail || parsed?.message || text || "Dispatch failed";
+    throw new Error(msg);
+  }
+  return parsed ?? {};
 }
 export async function updateTrip(id, payload) {
   const r = await fetch(`${base}/trips/${id}`, {
